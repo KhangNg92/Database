@@ -1,0 +1,61 @@
+1.
+
+ - String
+ - linear
+ -  linear
+ - float
+ - float
+
+2.
+
+  - We can use the database for another machine can send requests through the server to get data
+
+ - In a text file, the operating system will lock the file and one of the instances will simply fail to write or the second instance will overwrite the data written by the first. Neither of these outcomes are good.
+
+3.
+
+ - SQL uses a single = symbol for equality instead of ==
+
+4. - We will match pieces of database that have the same meaning together
+
+Each "cell" in a table (the intersection of the column and row) contains a particular value-some piece of information that the column name describes.
+
+5. All the information will store a table with columns labeled according to what is stored there, and rows that represent individual purchases.
+
+6.  3 data types that can be used in a table are string, integer and float. 
+
+7. 
+
+We SELECT two columns, date and payment, FROM payments to give the results:
+
+date	amount
+2016-05-01	1500
+2016-05-10	37
+2016-05-15	124.93
+2016-05-23	54.72
+
+We SELECT amount FROM payments WHERE amount is greater than 500 to give the results:
+
+amount
+1500
+
+We SELECT all the columns fromt payments WHERE payee is Mega Foods to give the results:
+
+date	payee	amount	memo
+2016-05-15	Mega Foods	124.93	Groceries
+
+8.
+
+SELECT email, signup
+FROM users
+WHERE name = 'DeAndre Data';
+
+
+SELECT userid
+FROM users
+WHERE email = 'aleesia.algorithm@uw.edu';
+
+SELECT *
+FROM users
+WHERE userid = 4;
+
