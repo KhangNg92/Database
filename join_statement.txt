@@ -1,0 +1,192 @@
+1. How do you find related data held in two separate data tables?
+
+We can use primary key and foreign key. Primary key is a unique identifier for each row in a database table and it relate to the foreign key on the next table
+
+2. 
+(INNER) JOIN: Returns records that have matching values in both tables. Example 
+OrderID	CustomerID	EmployeeID	OrderDate	ShipperID
+10308	2		7		1996-09-18	3
+10309	37		3		1996-09-19	1
+10310	77		8		1996-09-20	2
+
+CustomerID	CustomerName				ContactName					Address	City	PostalCode	Country
+1		Alfreds Futterkiste			Maria Anders	Obere Str. 57			Berlin		12209		Germany
+2		Ana Trujillo Emparedados y helados	Ana Trujillo	Avda. de la Constitución 2222	México D.F.	05021		Mexico
+3		Antonio Moreno Taquería	Antonio Moreno	Mataderos 2312					México D.F.	05023		Mexico
+
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+10308	Ana Trujillo Emparedados y helados
+10309	Hungry Owl All-Night Grocers
+10310	The Big Cheese
+
+LEFT (OUTER) JOIN: Return all records from the left table, and the matched records from the right table
+CustomerID	CustomerName				ContactName					Address	City	PostalCode	Country
+1		Alfreds Futterkiste			Maria Anders	Obere Str. 57			Berlin		12209		Germany
+2		Ana Trujillo Emparedados y helados	Ana Trujillo	Avda. de la Constitución 2222	México D.F.	05021		Mexico
+3		Antonio Moreno Taquería	Antonio Moreno	Mataderos 2312					México D.F.	05023		Mexico
+
+
+OrderID	CustomerID	EmployeeID	OrderDate	ShipperID
+10308	2		7		1996-09-18	3
+10309	37		3		1996-09-19	1
+10310	77		8		1996-09-20	2
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+CustomerName	                       OrderID
+Ana Trujillo Emparedados y helados	10308
+Hungry Owl All-Night Grocers	        10309
+The Big Cheese				10310
+
+RIGHT (OUTER) JOIN: Return all records from the right table, and the matched records from the left table
+OrderID	CustomerID	EmployeeID	OrderDate	ShipperID
+10308	2		7		1996-09-18	3
+10309	37		3		1996-09-19	1
+10310	77		8		1996-09-20	2
+
+
+
+EmployeeID	LastName	FirstName	BirthDate	Photo
+1		Davolio		Nancy		12/8/1968	EmpID1.pic
+2		Fuller		Andrew		2/19/1952	EmpID2.pic
+3		Leverling	Janet		8/30/1963	EmpID3.pic
+
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+OrderID	LastName	FirstName
+10308 	King 		Robert 
+10309 	Leverling 	Janet 
+10310 	Callahan 	Laura 
+
+3. 
+
+The PRIMARY KEY uniquely identifies each record in a database table.
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (ID)
+);
+
+A FOREIGN KEY is a key used to link two tables together.
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
+4.
+
+SQL aliases are used to give a table, or a column in a table, a temporary name. Aliases are often used to make column names more readable.
+
+5. 
+
+SELECT professor.name, compensation.salary,
+compensation.vacation_days FROM professor as p
+JOIN compensation ON p.id =
+compensation.p_id;
+
+6.
+
+NATURAL JOIN has columns with the same name of associated tables will appear once only.
+
+ ITEM_ID | ITEM_NAME    | ITEM_UNIT | COMPANY_ID |
++---------+--------------+-----------+------------+
+| 1       | Chex Mix     | Pcs       | 16         |
+| 6       | Cheez-It     | Pcs       | 15         |
+| 2       | BN Biscuit   | Pcs       | 15         |
+| 3       | Mighty Munch | Pcs       | 17         |
+| 4       | Pot Rice     | Pcs       | 15         |
+| 5       | Jaffa Cakes  | Pcs       | 18         |
+| 7       | Salt n Shake | Pcs       |      
+
+| COMPANY_ID | COMPANY_NAME  | COMPANY_CITY |
++------------+---------------+--------------+
+| 18         | Order All     | Boston       |
+| 15         | Jack Hill Ltd | London       |
+| 16         | Akas Foods    | Delhi        |
+| 17         | Foodies.      | London       |
+| 19         | sip-n-Bite.   | New York   
+
+SELECT *
+FROM foods 
+NATURAL JOIN company;
+
+COMPANY_ID ITEM_ID    ITEM_NAME                 ITEM_UNIT  COMPANY_NAME              COMPANY_CITY
+---------- ---------- ------------------------- ---------- ------------------------- --------------
+16         1          Chex Mix                  Pcs        Akas Foods                Delhi
+15         6          Cheez-It                  Pcs        Jack Hill Ltd             London
+15         2          BN Biscuit                Pcs        Jack Hill Ltd             London
+17         3          Mighty Munch              Pcs        Foodies.                  London
+15         4          Pot Rice                  Pcs        Jack Hill Ltd             London
+18         5          Jaffa Cakes               Pcs        Order All                 Boston
+7. 
+
+SELECT employees.id, employees.name, shifts.id, shifts.date, shifts.start_time, shifts.end_time
+FROM scheduled_shifts
+JOIN employees ON employees.id = scheduled_shifts.employee_id 
+JOIN shifts ON scheduled_shifts.shift_id = shifts.id;
+
+8.
+Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+SELECT dogs.id, dogs.name, dogs.gender, dogs.age, dogs.weight, dogs.breed, dogs.intake_date, dogs.in_foster
+FROM volunteers
+JOIN dogs ON dogs.id = volunteers.foster_dog_id;
+
+Create a list of adopters who have not yet chosen a dog to adopt.
+SELECT adopters.id, adopters.first_name, adopters.last_name, adopters.address, adopters.phone_number
+FROM dog_adoptions
+JOIN adopters ON adopters.id != dog_adoptions.adopter_id
+
+The name of the person who adopted Rosco.
+SELECT adopters.first_name, adopters.last_name
+FROM dog_adoptions as d
+JOIN adopters ON d.adopter_id = adopters.id
+JOIN dogs ON d.dog_id = dogs.id
+WHERE dogs.name = 'Rosco';
+
+Lists of all cats and all dogs who have not been adopted.
+SELECT dogs.id, dogs.name, dogs.gender, dogs.age, dogs.weight, dogs.breed, dogs.intake_date
+FROM dog_adoptions as d
+JOIN dogs ON d.dog_id != dogs.id;
+
+SELECT cats.id, cats.name, cats.gender, cats.age, cats.intake_date
+FROM cat_adoptions as ca
+JOIN cats ON ca.cat_id != cats.id;
+
+
+The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
+SELECT cats.name, adopters.first_name, adopters.last_name, cat_adoptions.date
+FROM cat_adoptions 
+JOIN cats ON cats.id = cat_adoptions.cat_id
+JOIN adopters ON adopters.id = cat_adoptions.adopter_id
+WHERE date > current_date - 30;
+
+9.
+To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+SELECT patrons.name, holds.rank
+FROM holds 
+JOIN patrons ON patrons.id = holds.patron_id
+JOIN books ON books.isbn = holds.isbn
+WHERE books.title = 'Advanced Potion-Making';
+
+List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
+SELECT patrons.id, patrons.name, books.title
+FROM transactions as tr
+JOIN patrons ON tr.id = patrons.id
+JOIN books ON books.isbn = tr.isbn;
+
