@@ -1,0 +1,123 @@
+1. - adding :INSERT INTO
+   - update: UPDATE
+   - delete: DELETE
+
+2. For add command: INSERT INTO the database in where the VALUES are (something)
+
+3. What are some of the data types that can be used in tables? Give a real-world example of each type.
+
+ - timestamp datatype can be used for time in electronic devices 
+ - image dataype can be used for pictures identify
+
+4. First and last name: text
+   Whether they sent in their RSVP: boolean
+   Number of guests: integer
+   Number of meals: integer
+
+ CREATE TABLE wedding (
+	first name: text
+	last name: text
+	RSVP: boolean 
+	number of meals: integer
+	number of guests: integer);
+
+- ALTER TABLE products ADD COLUMN Thankyou card boolean;
+
+- DELETE FROM wedding WHERE number of meals = *;
+
+wedding=# CREATE TABLE wedding (
+wedding(# FirstandLastname text,
+wedding(# RSVP boolean,
+wedding(# Guests integer,
+wedding(# meals integer);
+CREATE TABLE
+wedding=# ALTER wedding ADD COLUMN Thankscard boolean;
+ERROR:  syntax error at or near "wedding"
+LINE 1: ALTER wedding ADD COLUMN Thankscard boolean;
+              ^
+wedding=# ALTER TABLE  wedding ADD COLUMN Thankscard boolean;
+ALTER TABLE
+wedding=# DELETE FROM wedding WHERE meals = *;
+ERROR:  syntax error at or near "*"
+LINE 1: DELETE FROM wedding WHERE meals = *;
+                                          ^
+wedding=# DELETE FROM wedding WHERE meals  *;
+ERROR:  syntax error at or near ";"
+LINE 1: DELETE FROM wedding WHERE meals  *;
+                                          ^
+wedding=# DELETE FROM wedding WHERE meals;
+ERROR:  argument of WHERE must be type boolean, not type integer
+LINE 1: DELETE FROM wedding WHERE meals;
+                                  ^
+wedding=# ALTER TABLE wedding DROP COLUMN meals;
+ALTER TABLE
+wedding=# ALTER TABLE wedding ADD COLUMN tablenumb integer;
+ALTER TABLE
+wedding=# ALTER TABLE wedding DROP COLUMN tablenumb;
+ALTER TABLE
+wedding=#
+
+5. library
+
+library=# CREATE TABLE library(
+library(# ISBN serial,
+library(# title text,
+library(# author text,
+library(# genre text,
+library(# publishingdate date,
+library(# numbercopies integer,
+library(# availablecopies integer);
+CREATE TABLE
+library=#  INSERT INTO library(ISBN, title, author, genre, publishingdate, numbercopies, availablecopies) VALUES (
+library(# 978-0316118408, 'The Flavor Bible', 'Karen Page', 'cooking', '2008-09-16',400,500);
+library=# INSERT INTO library(ISBN, title, author, genre, publishingdate, numbercopies, availablecopies) VALUES (
+library(#  978-1476753836 ,' Mastering the Elements of Good Cooking',' Samin Nosrat','cooking', '2017-04-25', 300, 500);
+INSERT 0 1
+library=# INSERT INTO library(ISBN, title, author, genre, publishingdate, numbercopies, availablecopies) VALUES (
+library(# 978-0393081084, 'The Food Lab: Better Home Cooking Through Science','JKenji', 'cooking','2015-09-21',100,600);
+INSERT 0 1
+library=# UPDATE library SET availablecopies = 499 WHERE author = 'Karen Page';
+UPDATE 1
+library=# DELETE FROM library WHERE title = 'The Flavor Bible';
+DELETE 1
+
+6. 
+spacecrafts=# SELECT * FROM spacecrafts;
+ id |     name      | yearlaunched | country |                                                                                                   mission                                                                                                    |                orbit                 | currentoperate | distancefromearth
+----+---------------+--------------+---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+----------------+-------------------
+ 16 | Feng Huo 1    | 2000-01-25   | China   | The Zhongxing series has provided domestic Chinese communications since 1988 for the China Telecommunications Broadcast Satellite Corp, a division of the Chinese ministry of Posts and  Telecommunications. | Geosstationary at 98° East longitude | f              |              4000
+  4 | Progress M1-1 | 2000-02-01   | Russia  |  It is equipped to raise the altitude of the station from 320 km to 400 km, and to repressurize it with 150 kg of nitrogen.                                                                                  | Circular at ~350 km x 51.6°          | t              |              1600
+(2 rows)
+I actually write the code but forgot to copy it and accidentially close my terminal. So hope this result is acceptable
+7. 
+
+ibox=# CREATE TABLE inbox (
+ibox(# id integer,
+ibox(# subjectline text,
+ibox(# sender text,
+ibox(# recipents VARCHAR,
+ibox(# body text,
+ibox(# time timestamp,
+ibox(# read boolean,
+ibox(# idchain integer);
+CREATE TABLE
+ibox=# INSERT INTO inbox(id, subjectline, sender, recipents, body, time, read, idchain) VALUES (
+ibox(# 2, 'Nguyen', 'Linkedin', 'linkedin@gmail.com',  'qualified for a job', '2018-06-22 07:00:00', false, 2);
+INSERT 0 1
+ibox=# INSERT INTO inbox(id, subjectline, sender, recipents, body, time, read, idchain) VALUES (
+ibox(# 3, 'Database', 'Postgres', 'postgres@sql.com', 'Database Management', '2018-07-22 10:00:00', true, 3);
+INSERT 0 1
+ibox=# DELETE FROM inbox WHERE id = 1;
+DELETE 1
+ibox=# UPDATE inbox SET read = false;
+UPDATE 2
+ibox=# UPDATE inbox SET read = true;
+UPDATE 2
+ibox=# UPDATE inbox WHERE idchain = 2 SET read = false;
+ERROR:  syntax error at or near "WHERE"
+LINE 1: UPDATE inbox WHERE idchain = 2 SET read = false;
+                     ^
+ibox=# UPDATE inbox SET read = false WHERE idchain = 2;
+UPDATE 1
+
+
